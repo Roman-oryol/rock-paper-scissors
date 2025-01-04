@@ -11,3 +11,18 @@ function getComputerChoice() {
 
   return 'scissors';
 }
+
+function getHumanChoice() {
+  let humanChoice = '';
+  let isValidChoice = false;
+
+  while (!isValidChoice) {
+    humanChoice = prompt('Enter your choice: rock, paper, or scissors.', '');
+    isValidChoice =
+      humanChoice === 'rock' ||
+      humanChoice === 'paper' ||
+      humanChoice === 'scissors';
+  }
+
+  return humanChoice;
+}
