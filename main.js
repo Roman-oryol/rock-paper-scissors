@@ -1,5 +1,8 @@
+const NUMBER_OF_ROUNDS = 5;
 let humanScore = 0;
 let computerScore = 0;
+
+playGame();
 
 function getComputerChoice() {
   const computerChoice = Math.floor(Math.random() * 3) + 1;
@@ -15,12 +18,19 @@ function getComputerChoice() {
   return 'scissors';
 }
 
-function getHumanChoice() {
+function getHumanChoice(roundNumber) {
   let humanChoice = '';
   let isValidChoice = false;
+  const roundNumberMessage = `${
+    roundNumber ? 'Round ' + roundNumber + ' of ' + NUMBER_OF_ROUNDS : ''
+  }`;
 
   while (!isValidChoice) {
-    humanChoice = prompt('Enter your choice: rock, paper, or scissors.', '');
+    humanChoice = prompt(
+      `${roundNumberMessage}
+Enter your choice: rock, paper, or scissors.`,
+      ''
+    );
     isValidChoice =
       humanChoice === 'rock' ||
       humanChoice === 'paper' ||
@@ -51,5 +61,25 @@ function playRound(humanChoice, computerChoice) {
   }
 
   alert(`${message}
-Score: ${humanScore} - ${computerScore}`);
+Score: ${humanScore} : ${computerScore}`);
+}
+
+function playGame() {
+  for (let i = 1; i <= NUMBER_OF_ROUNDS; i++) {
+    const humanChoice = getHumanChoice(i);
+    const computerChoice = getComputerChoice();
+
+    playRound(humanChoice, computerChoice);
+  }
+
+  if (humanScore > computerScore) {
+    alert(`The game is over!
+You won with a score of ${humanScore} : ${computerScore}!`);
+  } else if (humanScore === computerScore) {
+    alert(`The game is over!
+It's a draw with a score of ${humanScore} : ${computerScore}!`);
+  } else {
+    alert(`The game is over!
+You lose with a score of ${humanScore} : ${computerScore}!`);
+  }
 }
