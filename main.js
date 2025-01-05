@@ -29,3 +29,27 @@ function getHumanChoice() {
 
   return humanChoice;
 }
+
+function playRound(humanChoice, computerChoice) {
+  let message = '';
+  const isHumanWinner =
+    (humanChoice === 'rock' && computerChoice === 'scissors') ||
+    (humanChoice === 'scissors' && computerChoice === 'paper') ||
+    (humanChoice === 'paper' && computerChoice === 'rock');
+
+  humanChoice = humanChoice.toLowerCase();
+  computerChoice = computerChoice.toLowerCase();
+
+  if (isHumanWinner) {
+    message = `You win! ${humanChoice} beats ${computerChoice}.`;
+    humanScore++;
+  } else if (humanChoice === computerChoice) {
+    message = "It's a draw!";
+  } else {
+    message = `You lose! ${computerChoice} beats ${humanChoice}.`;
+    computerScore++;
+  }
+
+  alert(`${message}
+Score: ${humanScore} - ${computerScore}`);
+}
