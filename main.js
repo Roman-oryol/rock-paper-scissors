@@ -1,8 +1,16 @@
-const NUMBER_OF_ROUNDS = 5;
+const playerChoiceButtons = document.querySelectorAll('button');
+const resultElement = document.querySelector('#result');
+
 let humanScore = 0;
 let computerScore = 0;
 
-playGame();
+playerChoiceButtons.forEach((button) => {
+  button.addEventListener('click', handlePlayerChoice);
+});
+
+function handlePlayerChoice(evt) {
+  playRound(getHumanChoice(evt), getComputerChoice());
+}
 
 function getComputerChoice() {
   const computerChoice = Math.floor(Math.random() * 3) + 1;
@@ -18,26 +26,8 @@ function getComputerChoice() {
   return 'scissors';
 }
 
-function getHumanChoice(roundNumber) {
-  let humanChoice = '';
-  let isValidChoice = false;
-  const roundNumberMessage = `${
-    roundNumber ? 'Round ' + roundNumber + ' of ' + NUMBER_OF_ROUNDS : ''
-  }`;
-
-  while (!isValidChoice) {
-    humanChoice = prompt(
-      `${roundNumberMessage}
-Enter your choice: rock, paper, or scissors.`,
-      ''
-    );
-    isValidChoice =
-      humanChoice === 'rock' ||
-      humanChoice === 'paper' ||
-      humanChoice === 'scissors';
-  }
-
-  return humanChoice;
+function getHumanChoice(evt) {
+  return evt.target.id;
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -62,24 +52,4 @@ function playRound(humanChoice, computerChoice) {
 
   alert(`${message}
 Score: ${humanScore} : ${computerScore}`);
-}
-
-function playGame() {
-  for (let i = 1; i <= NUMBER_OF_ROUNDS; i++) {
-    const humanChoice = getHumanChoice(i);
-    const computerChoice = getComputerChoice();
-
-    playRound(humanChoice, computerChoice);
-  }
-
-  if (humanScore > computerScore) {
-    alert(`The game is over!
-You won with a score of ${humanScore} : ${computerScore}!`);
-  } else if (humanScore === computerScore) {
-    alert(`The game is over!
-It's a draw with a score of ${humanScore} : ${computerScore}!`);
-  } else {
-    alert(`The game is over!
-You lose with a score of ${humanScore} : ${computerScore}!`);
-  }
 }
